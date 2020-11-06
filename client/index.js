@@ -1,31 +1,34 @@
 const io = require("socket.io-client").io;
-const readline = require("readline");
 
 const PORT = 3000;
 const urlApi = "http://localhost:" + PORT;
 
-const rl = readline.createInterface({
-   input: process.stdin,
-   output: process.stdout 
-});
-
 const socket = io(urlApi);
-
-socket.on('announce', (message) => {
-    console.log("announce: " + message + "\n");
-});
-
 socket.on('new_message', (data) => {
-    process.stdout.write(data.client + " : " + data.message + "\n");
-});
+    app.messages.push(data);
+})
 
-function loopChat() {
-    rl.question("\nMessage: ", (message) => {
-        if (message !== "exit") {
-            socket.emit("send_message", { message });
-            loopChat();
+const app = new Vue({
+    el: '#app',
+    data() { 
+        return {
+            client_message: '',
+            messages: [],
+        };
+    },
+    computed: {
+        str_messages() {
+            let str = '';
+            for (let msg of this.messages) {
+                str += `[${msg.date}] ${msg.client}: ${msg.message}\n`;
+            }
+            return str;
         }
-    });
-}
-
-loopChat();
+    },
+    methods: {
+        sendMessage() {
+            socket.emit('send_message', { message: this.client_message });
+            this.client_message = '';
+        }
+    }
+})

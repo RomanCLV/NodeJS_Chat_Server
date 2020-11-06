@@ -8,7 +8,15 @@
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RomanCLV/NodeJS_Chat_Server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RomanCLV/NodeJS_Chat_Server/issues"
+  },
+  "homepage": "https://github.com/RomanCLV/NodeJS_Chat_Server#readme",
+  "author": "Roman CLAVIER",
   "license": "ISC",
   "dependencies": {
     "socket.io": "^3.0.0"
